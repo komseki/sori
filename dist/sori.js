@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a402dda8990b28dd6638"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "eb3bedffa96e0db3e7f6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -9681,24 +9681,43 @@ module.exports = function (regExp, replace) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sori_js__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Sori_js__ = __webpack_require__(441);
 
+
+var dummy = {
+    /**
+     * 사용할 사운드파일 정보
+     */
+    sound: {
+        basicOnly: "assets/sound/eff_cm_btn_basic.mp3",
+        soundList: [{ "id": "contents", "url": 'assets/sound/bgm_cm_contents.mp3' }, { "id": "intro", "url": 'assets/sound/bgm_cm_intro.mp3' }, { "id": "eff_all", "url": 'assets/sound/eff_all.mp3' }, { "id": "nar", "url": 'assets/sound/nar_cm_moby_direct.mp3' }]
+    },
+    /* 사운드 시작커서위치 및 재생시간.
+    1-8번까지 파일 합쳐 eff_all.mp3 만듦.
+    eff_all.mp3
+    1. eff_cm_btn_basic : 0 - 0.156
+    2. eff_cm_btn_choice : 0.156 - 0.365
+    3. eff_cm_btn_remove : 0.365 - 0.844
+    4. eff_cm_btn_rolling : 0.844 - 1.463
+    5. eff_cm_btn_shooting : 1.463 - 2.113
+    6. eff_cm_btn_touch.mp3 : 2.113 - 2.401
+    7. eff_block_attached : 2.401 - 4.177
+    8. eff_block_remove : 4.177 - 5.953
+    */
+    effSoundConfig: {
+        basic: { "when": 0, "offset": 0, "duration": 0.156 },
+        choice: { "when": 0, "offset": 0.156, "duration": 0.209 },
+        remove: { "when": 0, "offset": 0.365, "duration": 0.479 },
+        rolling: { "when": 0, "offset": 0.844, "duration": 0.619 },
+        shooting: { "when": 0, "offset": 1.463, "duration": 0.65 },
+        touch: { "when": 0, "offset": 2.113, "duration": 0.288 },
+        attachedBlock: { "when": 0, "offset": 2.401, "duration": 1.776 },
+        removeBlock: { "when": 0, "offset": 4.177, "duration": 1.776 }
+    }
+};
 
 /***/ }),
-/* 328 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SoundLoader_js__ = __webpack_require__(329);
-
-
-/* unused harmony default export */ var _unused_webpack_default_export = ({
-    Sound: function Sound(url) {}
-});
-
-//let ldr = new SoundLoader();
-
-/***/ }),
+/* 328 */,
 /* 329 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9707,17 +9726,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(376);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(433);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(377);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(377);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(403);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_core_js_object_keys__ = __webpack_require__(437);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_core_js_object_keys___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_core_js_object_keys__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_babel_runtime_core_js_promise__ = __webpack_require__(418);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_babel_runtime_core_js_promise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Sound_js__ = __webpack_require__(440);
 
 
 
@@ -9726,8 +9744,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var EventEmitter = __webpack_require__(411);
-
-
 
 /**
  *
@@ -9787,20 +9803,29 @@ function _decode(context, res) {
 var SoundLoader = function (_EventEmitter) {
     __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(SoundLoader, _EventEmitter);
 
-    /**
-     * 생성자 함수
-     * @param context {AudioContext}
-     */
+    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(SoundLoader, null, [{
+        key: 'createInstance',
+        value: function createInstance(context) {
+            return new SoundLoader(context);
+        }
+
+        /**
+         * 생성자 함수
+         * @param context {AudioContext}
+         */
+
+    }]);
+
     function SoundLoader(context) {
         __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, SoundLoader);
 
-        var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (SoundLoader.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(SoundLoader)).call(this));
+        var _this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (SoundLoader.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(SoundLoader)).call(this));
 
         _this.context = context;
         return _this;
     }
 
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(SoundLoader, [{
+    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(SoundLoader, [{
         key: 'load',
         value: function load(info) {
             var _this2 = this;
@@ -9825,17 +9850,8 @@ var SoundLoader = function (_EventEmitter) {
             return _request(obj).then(function (res) {
                 return _decode(_this3.context, res);
             }).then(function (buffer) {
-                //{ buffer:buffer, context:this._context, config:config, id:id }
-                var info = {
-                    buffer: buffer,
-                    context: _this3.context,
-                    config: obj.config,
-                    id: obj.id
-                },
-                    snd = __WEBPACK_IMPORTED_MODULE_7__Sound_js__["a" /* default */].getInstance(info);
-                _this3.emit(SoundLoader.COMPLETE, snd);
+                _this3.emit(SoundLoader.COMPLETE, obj, buffer);
             }).catch(function (err) {
-                console.log(err);
                 _this3.emit(SoundLoader.ERROR, { url: obj.url, err: err });
             });
         }
@@ -9849,24 +9865,7 @@ SoundLoader.COMPLETE = 'complete';
 SoundLoader.ERROR = 'error';
 
 
-var ldr = new SoundLoader(new AudioContext());
-// ldr.load({url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer'});
-ldr.load([{ url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer' }, { url: '../assets/sound/eff_cm_btn_basic.mp3', responseType: 'arraybuffer' }]);
-
-ldr.on(SoundLoader.ERROR, function (url) {
-    console.log(SoundLoader.ERROR, url);
-});
-
-ldr.on(SoundLoader.COMPLETE, function (snd) {
-    console.log(SoundLoader.COMPLETE, snd);
-    snd.stop();
-});
-
-ldr.on(SoundLoader.FINISH, function () {
-    console.log(SoundLoader.FINISH);
-});
-
-/* unused harmony default export */ var _unused_webpack_default_export = (SoundLoader);
+/* harmony default export */ __webpack_exports__["a"] = (SoundLoader);
 
 /***/ }),
 /* 330 */
@@ -12626,8 +12625,8 @@ var Sound = function (_EventEmitter) {
     __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Sound, _EventEmitter);
 
     __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(Sound, null, [{
-        key: 'getInstance',
-        value: function getInstance(info) {
+        key: 'createInstance',
+        value: function createInstance(info) {
             return new Sound().init(info);
         }
     }]);
@@ -12790,7 +12789,97 @@ var Sound = function (_EventEmitter) {
 Sound.ENDED = 'ended';
 
 
-/* harmony default export */ __webpack_exports__["a"] = (Sound);
+/* unused harmony default export */ var _unused_webpack_default_export = (Sound);
+
+/***/ }),
+/* 441 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(371);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(376);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(433);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(377);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Sound_js__ = __webpack_require__(440);
+
+
+
+
+
+
+
+
+var EventEmitter = __webpack_require__(411);
+
+var Sori = function (_EventEmitter) {
+    __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Sori, _EventEmitter);
+
+    function Sori() {
+        __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Sori);
+
+        var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Sori.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(Sori)).call(this));
+
+        _this._audioBufferList = {};
+        _this._soundList = {};
+        _this._loadedList = {};
+
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        _this._context = new AudioContext();
+        return _this;
+    }
+
+    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Sori, [{
+        key: 'load',
+        value: function load() {}
+    }, {
+        key: 'getSound',
+        value: function getSound() {}
+    }]);
+
+    return Sori;
+}(EventEmitter);
+
+Sori.LOAD_COMPLETE = 'loadComplete';
+Sori.LOAD_FINISH = 'loadFinish';
+Sori.LOAD_ERROR = 'loadError';
+
+
+/* unused harmony default export */ var _unused_webpack_default_export = (Sori);
+
+var ldr = __WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].createInstance(new AudioContext());
+// ldr.load({url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer'});
+ldr.load([{ url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer' }, { url: '../assets/sound/eff_cm_btn_basic.mp3', responseType: 'arraybuffer' }]);
+
+ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].ERROR, function (url) {
+    console.log(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].ERROR, url);
+});
+
+ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].COMPLETE, function (obj, buffer) {
+    console.log(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].COMPLETE, obj, buffer);
+    /*
+    //{ buffer:buffer, context:this._context, config:config, id:id }
+    const info = {
+            buffer,
+            context: this.context,
+            config: obj.config,
+            id: obj.id
+        },
+        snd = Sound.createInstance(info);
+    //
+    snd.stop();
+    */
+});
+
+ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].FINISH, function () {
+    console.log(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].FINISH);
+});
 
 /***/ })
 /******/ ]);

@@ -1,6 +1,5 @@
 const EventEmitter = require('events');
 
-import Sound from './Sound.js';
 
 /**
  *
@@ -61,6 +60,10 @@ class SoundLoader extends EventEmitter{
 
     context;
 
+    static createInstance(context){
+        return new SoundLoader(context);
+    }
+
     /**
      * 생성자 함수
      * @param context {AudioContext}
@@ -88,41 +91,14 @@ class SoundLoader extends EventEmitter{
         return _request(obj).then(res=>{
             return _decode(this.context, res);
         }).then(buffer=>{
-            //{ buffer:buffer, context:this._context, config:config, id:id }
-            const info = {
-                    buffer,
-                    context: this.context,
-                    config: obj.config,
-                    id: obj.id
-                },
-                snd = Sound.getInstance(info);
-            this.emit(SoundLoader.COMPLETE, snd);
+            this.emit(SoundLoader.COMPLETE, obj, buffer);
         }).catch(err=>{
-            console.log(err);
             this.emit(SoundLoader.ERROR, {url: obj.url, err});
         });
     }
 }
 
-let ldr = new SoundLoader(new AudioContext());
-// ldr.load({url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer'});
-ldr.load([
-    {url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer'},
-    {url: '../assets/sound/eff_cm_btn_basic.mp3', responseType: 'arraybuffer'}
-]);
 
-ldr.on(SoundLoader.ERROR, url=>{
-    console.log(SoundLoader.ERROR, url);
-});
-
-ldr.on(SoundLoader.COMPLETE, snd=>{
-    console.log(SoundLoader.COMPLETE, snd);
-    snd.stop();
-});
-
-ldr.on(SoundLoader.FINISH, ()=>{
-    console.log(SoundLoader.FINISH);
-});
 
 
 

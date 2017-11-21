@@ -12,7 +12,7 @@ class Sound extends EventEmitter{
     _config;
     _loop = false;
 
-    static getInstance( info ){
+    static createInstance( info ){
         return new Sound().init(info);
     }
 
