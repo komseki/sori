@@ -41,6 +41,12 @@ class SoundLoader extends EventEmitter{
     }
 
     _load( obj ){
+        if( obj._isLoad === false ){
+            return this._skipLoad( obj ).then(()=>{
+                this.emit(SoundLoader.COMPLETE, obj, null);
+            });
+            return;
+        }
         // arrayybuffer로 강제 지정한다.
         obj.responseType = 'arraybuffer';
         return request(obj).then(res=>{
@@ -49,6 +55,12 @@ class SoundLoader extends EventEmitter{
             this.emit(SoundLoader.COMPLETE, obj, buffer);
         }).catch(err=>{
             this.emit(SoundLoader.ERROR, {url: obj.url, err});
+        });
+    }
+
+    _skipLoad( obj ){
+        return new Promise((resolve, reject)=>{
+            resolve();
         });
     }
 }

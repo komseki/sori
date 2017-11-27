@@ -32,27 +32,44 @@ class Sori extends EventEmitter{
         // 버퍼가 이미 있는지 확인한다. 버퍼가 있으면 있는 버퍼로 사용한다.
         // 버퍼가 이미 없으나 동일한 주소의 호출이 있다면, 예약을 만들어 놓는다.
 
-        let ldr = SoundLoader.createInstance(new AudioContext()),
-            loadInfo,
-            uids;
+        let ldr = SoundLoader.createInstance(this._context)
 
+
+        /**
+         * 로드 에러.
+         */
         ldr.on(SoundLoader.ERROR, url=>{
             this.emit( Sori.LOAD_ERROR, url );
         });
 
+        /**
+         * 개별 로드 완료
+         */
         ldr.on(SoundLoader.COMPLETE, (obj, buffer)=>{
-            this._audioBufferList[obj.url] = buffer;
-            this.createSound(obj, buffer);
+            buffer = buffer || this._audioBufferList[obj.url];
+            console.log( obj, buffer );
+            if( !!buffer ) {
+                this._audioBufferList[obj.url] = buffer;
+                this.createSound(obj, buffer);
+            }
         });
 
+        /**
+         * 전체 로드 완료
+         */
         ldr.on(SoundLoader.FINISH, ()=>{
             this.emit(Sori.LOAD_FINISH);
         });
 
+        /**
+         * 로드 시작
+         */
         ldr.load( loadList );
     }
 
     createSound(obj, buffer){
+        let loadInfo,
+            uids;
         uids = this._urlList[obj.url];
         uids.forEach(v=>{
             // TODO ::  Sound 객체가 있는지 확인하고 생성한다.
@@ -67,8 +84,8 @@ class Sori extends EventEmitter{
                 snd = Sound.createInstance(info);
             //
             this._soundList[v] = snd;
+            this.emit( Sori.LOAD_COMPLETE, snd );
         });
-        this.emit( Sori.LOAD_COMPLETE, snd );
     }
 
     _parseList( list ){
@@ -82,18 +99,17 @@ class Sori extends EventEmitter{
                 this._urlList[v.url] = [v._uid];
                 state = true;
             }else{
-                this._urlList[v.url].push(v._uid);
                 state = false;
             }
+            console.log( v.id, state );
 
+            v._isLoad = state;
+
+            this._urlList[v.url].push(v._uid);
             this._idList[v.id] = v._uid;
             this._loadInfos[v._uid] = v;
 
-            // id: uid; 1
-            // url: uid; ...
-            //
-
-            return state;
+            return true;
         });
     }
 
@@ -135,17 +151,8 @@ class Sori extends EventEmitter{
      * @return {Array}
      */
     getSoundAll(){
-        return Object.values(this._soundList);
+        return this._soundList;
     }
-
-    getPlayNote(){
-
-    }
-
-    addPlayNote(){
-
-    }
-
 }
 
 const sori = new Sori();
@@ -161,9 +168,10 @@ sori.on( Sori.LOAD_COMPLETE, snd=>{
 
 sori.on( Sori.LOAD_FINISH, ()=>{
     let snd = sori.getSoundByUrl('../assets/sound/eff_all.mp3');
-    console.log(sori.getSoundAll());
-    console.log(sori.getSoundById('aa'))
+    console.log(sori.getSoundById('aaa'), sori._soundList);
 } );
+
+
 
 export default Sori;
 

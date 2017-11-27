@@ -4,21 +4,18 @@ webpackHotUpdate(0,{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_values__ = __webpack_require__(443);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_values___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_values__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__SoundLoader_js__ = __webpack_require__(422);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Sound_js__ = __webpack_require__(442);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__ = __webpack_require__(422);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Sound_js__ = __webpack_require__(442);
 
 
 
@@ -30,12 +27,12 @@ webpackHotUpdate(0,{
 var EventEmitter = __webpack_require__(129);
 
 var Sori = function (_EventEmitter) {
-    __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(Sori, _EventEmitter);
+    __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Sori, _EventEmitter);
 
     function Sori() {
-        __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, Sori);
+        __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Sori);
 
-        var _this = __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Sori.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(Sori)).call(this));
+        var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Sori.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(Sori)).call(this));
 
         _this._uidCnt = 0;
         _this._urlList = {};
@@ -49,7 +46,7 @@ var Sori = function (_EventEmitter) {
         return _this;
     }
 
-    __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(Sori, [{
+    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Sori, [{
         key: 'load',
         value: function load(list) {
             var _this2 = this;
@@ -60,23 +57,37 @@ var Sori = function (_EventEmitter) {
             // 버퍼가 이미 있는지 확인한다. 버퍼가 있으면 있는 버퍼로 사용한다.
             // 버퍼가 이미 없으나 동일한 주소의 호출이 있다면, 예약을 만들어 놓는다.
 
-            var ldr = __WEBPACK_IMPORTED_MODULE_6__SoundLoader_js__["a" /* default */].createInstance(new AudioContext()),
-                loadInfo = void 0,
-                uids = void 0;
+            var ldr = __WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].createInstance(this._context);
 
-            ldr.on(__WEBPACK_IMPORTED_MODULE_6__SoundLoader_js__["a" /* default */].ERROR, function (url) {
+            /**
+             * 로드 에러.
+             */
+            ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].ERROR, function (url) {
                 _this2.emit(Sori.LOAD_ERROR, url);
             });
 
-            ldr.on(__WEBPACK_IMPORTED_MODULE_6__SoundLoader_js__["a" /* default */].COMPLETE, function (obj, buffer) {
-                _this2._audioBufferList[obj.url] = buffer;
-                _this2.createSound(obj, buffer);
+            /**
+             * 개별 로드 완료
+             */
+            ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].COMPLETE, function (obj, buffer) {
+                buffer = buffer || _this2._audioBufferList[obj.url];
+                console.log(obj, buffer);
+                if (!!buffer) {
+                    _this2._audioBufferList[obj.url] = buffer;
+                    _this2.createSound(obj, buffer);
+                }
             });
 
-            ldr.on(__WEBPACK_IMPORTED_MODULE_6__SoundLoader_js__["a" /* default */].FINISH, function () {
+            /**
+             * 전체 로드 완료
+             */
+            ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].FINISH, function () {
                 _this2.emit(Sori.LOAD_FINISH);
             });
 
+            /**
+             * 로드 시작
+             */
             ldr.load(loadList);
         }
     }, {
@@ -84,6 +95,8 @@ var Sori = function (_EventEmitter) {
         value: function createSound(obj, buffer) {
             var _this3 = this;
 
+            var loadInfo = void 0,
+                uids = void 0;
             uids = this._urlList[obj.url];
             uids.forEach(function (v) {
                 // TODO ::  Sound 객체가 있는지 확인하고 생성한다.
@@ -95,11 +108,11 @@ var Sori = function (_EventEmitter) {
                     id: loadInfo.id,
                     uid: v
                 },
-                    snd = __WEBPACK_IMPORTED_MODULE_7__Sound_js__["a" /* default */].createInstance(info);
+                    snd = __WEBPACK_IMPORTED_MODULE_6__Sound_js__["a" /* default */].createInstance(info);
                 //
                 _this3._soundList[v] = snd;
+                _this3.emit(Sori.LOAD_COMPLETE, snd);
             });
-            this.emit(Sori.LOAD_COMPLETE, snd);
         }
     }, {
         key: '_parseList',
@@ -116,18 +129,17 @@ var Sori = function (_EventEmitter) {
                     _this4._urlList[v.url] = [v._uid];
                     state = true;
                 } else {
-                    _this4._urlList[v.url].push(v._uid);
                     state = false;
                 }
+                console.log(v.id, state);
 
+                v._isLoad = state;
+
+                _this4._urlList[v.url].push(v._uid);
                 _this4._idList[v.id] = v._uid;
                 _this4._loadInfos[v._uid] = v;
 
-                // id: uid; 1
-                // url: uid; ...
-                //
-
-                return state;
+                return true;
             });
         }
 
@@ -183,14 +195,8 @@ var Sori = function (_EventEmitter) {
     }, {
         key: 'getSoundAll',
         value: function getSoundAll() {
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_values___default()(this._soundList);
+            return this._soundList;
         }
-    }, {
-        key: 'getPlayNote',
-        value: function getPlayNote() {}
-    }, {
-        key: 'addPlayNote',
-        value: function addPlayNote() {}
     }]);
 
     return Sori;
@@ -210,8 +216,7 @@ sori.on(Sori.LOAD_COMPLETE, function (snd) {
 
 sori.on(Sori.LOAD_FINISH, function () {
     var snd = sori.getSoundByUrl('../assets/sound/eff_all.mp3');
-    console.log(sori.getSoundAll());
-    console.log(sori.getSoundById('aa'));
+    console.log(sori.getSoundById('aaa'), sori._soundList);
 });
 
 /* unused harmony default export */ var _unused_webpack_default_export = (Sori);
