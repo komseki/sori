@@ -4,15 +4,25 @@ import request from './utils/request';
 import decodeAudioData from './decodeAudioData';
 
 /**
- *
+ * 웹 오디오 로드및 디코딩.
  */
 class SoundLoader extends EventEmitter{
+    // 전체 로드 완료 이벤트명.
     static FINISH = 'finish';
+    // 개별 로드 완료 이벤트명.
     static COMPLETE = 'complete';
+    // 로드 에러 이벤트명.
     static ERROR = 'error';
 
+    // AudioContext
     context;
 
+    /**
+     * @description SoundLoader 인스턴스 생성 및 반환.
+     * @param context {AudioContext}
+     * @return {SoundLoader}
+     * @static
+     */
     static createInstance(context){
         return new SoundLoader(context);
     }
@@ -26,6 +36,10 @@ class SoundLoader extends EventEmitter{
         this.context = context;
     }
 
+    /**
+     * @description  Audio 로드 및 디코딩.
+     * @param info
+     */
     load( info ){
         if(Array.isArray(info)){
             const arr = [];
@@ -40,6 +54,12 @@ class SoundLoader extends EventEmitter{
         }
     }
 
+    /**
+     * Audio 로드 및 디코딩.
+     * @param obj
+     * @return {Promise}
+     * @private
+     */
     _load( obj ){
         if( obj._isLoad === false ){
             return this._skipLoad( obj ).then(()=>{
@@ -58,6 +78,12 @@ class SoundLoader extends EventEmitter{
         });
     }
 
+    /**
+     * 재활용 가능한 버퍼의는 로드 하지 않고, resolve()를 바로 호출 한다.
+     * @param obj
+     * @return {Promise}
+     * @private
+     */
     _skipLoad( obj ){
         return new Promise((resolve, reject)=>{
             resolve();

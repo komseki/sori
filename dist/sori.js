@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d11abf9840eebd251565"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f524472574fa12a9075a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11122,6 +11122,18 @@ var dummy = {
     }
 };
 
+var sori = new __WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */]();
+sori.load([{ url: '../assets/sound/eff_all.mp3', id: 'test' }, { url: '../assets/sound/eff_all.mp3' }, { url: '../assets/sound/eff_cm_btn_basic.mp3' }]);
+
+sori.on(__WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */].LOAD_COMPLETE, function (snd) {
+    console.log(snd._id);
+});
+
+sori.on(__WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */].LOAD_FINISH, function () {
+    var snd = sori.getSoundByUrl('../assets/sound/eff_all.mp3');
+    console.log(sori.getSoundById('aaa'), sori._soundList);
+});
+
 /***/ }),
 /* 389 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -11149,9 +11161,28 @@ var dummy = {
 
 var EventEmitter = __webpack_require__(129);
 
+/**
+ * Sori 클래스.
+ * 오디오 로드 및 재생을 관리한다.
+ */
+
 var Sori = function (_EventEmitter) {
     __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Sori, _EventEmitter);
 
+    /**
+     * 생성자 함수
+     */
+
+    // UID : Object(로드정보) 형태로 저장된 리스트.
+
+    // UID : Buffer 형태로 저장된 리스트
+
+    // UID 생성 카운트
+
+    // 로드 에러시 이벤트명
+
+
+    // 개별 로드 완료시 이벤트명
     function Sori() {
         __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Sori);
 
@@ -11169,17 +11200,31 @@ var Sori = function (_EventEmitter) {
         return _this;
     }
 
+    /**
+     * 로드 명령을 내린다
+     * @param list
+     */
+
+    // ID : UID 형태로 저장된 리스트.
+
+    // UID : Sound 형태로 저장된 리스트
+
+    // URL : [UID] 형태로 저장된 리스트
+
+
+    // AudioContext
+
+    // 전체 로드 완료시 이벤트명
+
+
     __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Sori, [{
         key: 'load',
         value: function load(list) {
             var _this2 = this;
 
+            list = Array.isArray(list) ? list : [list];
+
             var loadList = this._parseList(list);
-            console.log(loadList);
-
-            // 버퍼가 이미 있는지 확인한다. 버퍼가 있으면 있는 버퍼로 사용한다.
-            // 버퍼가 이미 없으나 동일한 주소의 호출이 있다면, 예약을 만들어 놓는다.
-
             var ldr = __WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].createInstance(this._context);
 
             /**
@@ -11190,7 +11235,7 @@ var Sori = function (_EventEmitter) {
             });
 
             /**
-             * 개별 로드 완료
+             * 개별 로드 완료. 사운드 객체를 만든다.
              */
             ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].COMPLETE, function (obj, buffer) {
                 buffer = buffer || _this2._audioBufferList[obj.url];
@@ -11213,6 +11258,13 @@ var Sori = function (_EventEmitter) {
              */
             ldr.load(loadList);
         }
+
+        /**
+         * Sound 객체의 인스턴스를 생성한다.
+         * @param obj - 로드된 오디오 로드/재생 정보.
+         * @param buffer - 로드된 오디오의 버퍼
+         */
+
     }, {
         key: 'createSound',
         value: function createSound(obj, buffer) {
@@ -11222,7 +11274,6 @@ var Sori = function (_EventEmitter) {
                 uids = void 0;
             uids = this._urlList[obj.url];
             uids.forEach(function (v) {
-                // TODO ::  Sound 객체가 있는지 확인하고 생성한다.
                 loadInfo = _this3._loadInfos[v];
                 var info = {
                     buffer: buffer,
@@ -11237,6 +11288,13 @@ var Sori = function (_EventEmitter) {
                 _this3.emit(Sori.LOAD_COMPLETE, snd);
             });
         }
+
+        /**
+         * 오디오의 주소를 이용해 로드할 목록을 새로 만든다.
+         * @param list
+         * @private
+         */
+
     }, {
         key: '_parseList',
         value: function _parseList(list) {
@@ -11254,7 +11312,6 @@ var Sori = function (_EventEmitter) {
                 } else {
                     state = false;
                 }
-                console.log(v.id, state);
 
                 v._isLoad = state;
 
@@ -11267,7 +11324,7 @@ var Sori = function (_EventEmitter) {
         }
 
         /**
-         * @description
+         * @description 오디오 파일의 UID에 매칭되는 사운드 객체를 반환한다.
          * @param uid
          * @return {Sound}
          * @private
@@ -11280,7 +11337,7 @@ var Sori = function (_EventEmitter) {
         }
 
         /**
-         * @description
+         * @description 오디오 파일의 ID에 매칭되는 사운드 객체를 반환한다.
          * @param id
          * @return {Sound}
          */
@@ -11293,8 +11350,7 @@ var Sori = function (_EventEmitter) {
         }
 
         /**
-         *
-         * @description
+         * @description  오디오 파일의 URL에 매칭되는 사운드 객체를 반환한다.
          * @param url
          * @return {Array}
          */
@@ -11311,7 +11367,7 @@ var Sori = function (_EventEmitter) {
         }
 
         /**
-         * @description
+         * @description 전체 사운드 객체의 목록을 가져온다.
          * @return {Array}
          */
 
@@ -11330,21 +11386,7 @@ Sori.LOAD_FINISH = 'loadFinish';
 Sori.LOAD_ERROR = 'loadError';
 
 
-var sori = new Sori();
-sori.load([{ url: '../assets/sound/eff_all.mp3', id: 'test' }, { url: '../assets/sound/eff_all.mp3' }, { url: '../assets/sound/eff_cm_btn_basic.mp3' }]);
-
-sori.on(Sori.LOAD_COMPLETE, function (snd) {
-    console.log(snd._id);
-});
-
-sori.on(Sori.LOAD_FINISH, function () {
-    var snd = sori.getSoundByUrl('../assets/sound/eff_all.mp3');
-    console.log(sori.getSoundById('aaa'), sori._soundList);
-});
-
-/* unused harmony default export */ var _unused_webpack_default_export = (Sori);
-
-// ldr.load({url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer'});
+/* harmony default export */ __webpack_exports__["a"] = (Sori);
 
 /***/ }),
 /* 390 */
@@ -12082,7 +12124,7 @@ var EventEmitter = __webpack_require__(129);
 
 
 /**
- *
+ * 웹 오디오 로드및 디코딩.
  */
 
 var SoundLoader = function (_EventEmitter) {
@@ -12090,6 +12132,18 @@ var SoundLoader = function (_EventEmitter) {
 
     __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass___default()(SoundLoader, null, [{
         key: 'createInstance',
+
+
+        /**
+         * @description SoundLoader 인스턴스 생성 및 반환.
+         * @param context {AudioContext}
+         * @return {SoundLoader}
+         * @static
+         */
+
+        // 로드 에러 이벤트명.
+
+        // 전체 로드 완료 이벤트명.
         value: function createInstance(context) {
             return new SoundLoader(context);
         }
@@ -12098,6 +12152,11 @@ var SoundLoader = function (_EventEmitter) {
          * 생성자 함수
          * @param context {AudioContext}
          */
+
+
+        // AudioContext
+
+        // 개별 로드 완료 이벤트명.
 
     }]);
 
@@ -12109,6 +12168,12 @@ var SoundLoader = function (_EventEmitter) {
         _this.context = context;
         return _this;
     }
+
+    /**
+     * @description  Audio 로드 및 디코딩.
+     * @param info
+     */
+
 
     __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_createClass___default()(SoundLoader, [{
         key: 'load',
@@ -12127,6 +12192,14 @@ var SoundLoader = function (_EventEmitter) {
                 this._load(info);
             }
         }
+
+        /**
+         * Audio 로드 및 디코딩.
+         * @param obj
+         * @return {Promise}
+         * @private
+         */
+
     }, {
         key: '_load',
         value: function _load(obj) {
@@ -12148,6 +12221,14 @@ var SoundLoader = function (_EventEmitter) {
                 _this3.emit(SoundLoader.ERROR, { url: obj.url, err: err });
             });
         }
+
+        /**
+         * 재활용 가능한 버퍼의는 로드 하지 않고, resolve()를 바로 호출 한다.
+         * @param obj
+         * @return {Promise}
+         * @private
+         */
+
     }, {
         key: '_skipLoad',
         value: function _skipLoad(obj) {
@@ -12774,7 +12855,7 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
  * obj.url
  * obj.responseType
  * obj.header
- *
+ * @description ajax 로드 함수. Promise 객체를 반환한다.
  * @param obj
  * @return {Promise}
  * @private
@@ -12883,14 +12964,49 @@ __webpack_require__(166)('keys', function () {
 
 var EventEmitter = __webpack_require__(129);
 
+/**
+ *  사운드 객체.
+ */
+
 var Sound = function (_EventEmitter) {
     __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Sound, _EventEmitter);
 
     __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(Sound, null, [{
         key: 'createInstance',
+
+
+        /**
+         * @description Sound 인스턴스 생성 및 반환.
+         * @param info {AudioContext}
+         * @return {Sound}
+         * @static
+         */
+
+        // 로드 및 재생정보
+
+        // BufferArray
+
+        // 음량을 위한  gainNode
+
+
+        //  사운드 재생 완료시 호출될 이벤트명.
         value: function createInstance(info) {
             return new Sound().init(info);
         }
+
+        /**
+         * 생성자 함수.
+         */
+
+        // 반복 재생여부.
+
+        // Audio  Source
+
+        // AudioContext
+
+
+        // 아이디
+
     }]);
 
     function Sound() {
@@ -12902,7 +13018,14 @@ var Sound = function (_EventEmitter) {
         return _this;
     }
 
-    // { buffer:buffer, context:this._context, config:config, id:id }
+    /**
+     * Sound 객체 초기화.
+     * @param buffer {ArrayBuffer}
+     * @param context {AudioContext}
+     * @param config {Object}
+     * @param id {String)
+     * @return {*}
+     */
 
 
     __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(Sound, [{
@@ -12917,20 +13040,9 @@ var Sound = function (_EventEmitter) {
 
             var ctx = this._context = context,
                 destination = ctx.destination,
-
-            // source = ctx.createBufferSource(),
-            oscillator = ctx.createOscillator(),
                 gainNode = ctx.createGain();
 
-            //oscillator.connect( gainNode );
             gainNode.connect(destination);
-
-            //
-            // source.buffer = buffer;
-            //
-            // source.connect( ctx.destination );
-            // source.connect( gainNode.gain );
-            // this._source = source;
 
             this._buffer = buffer;
             this._loop = false;
@@ -12942,7 +13054,7 @@ var Sound = function (_EventEmitter) {
         }
 
         /**
-         *
+         * @description 사운드 재생시작.
          * @param when {Number} 재생전 pause 타임.
          * @param offset {Number} 시작위치
          * @param duration {Number} 재생할 시간
@@ -12986,7 +13098,7 @@ var Sound = function (_EventEmitter) {
         }
 
         /**
-         * 정지
+         * @description 사운드 정지
          * @param when {Number} 정지 delay 시간.
          * @return {Object} Sound 객체
          */
@@ -13004,7 +13116,7 @@ var Sound = function (_EventEmitter) {
         }
 
         /**
-         * 반복
+         * @description 반복여부 설정.
          * @param bool {boolean} true 반복
          * @return {Object} Sound 객체
          */
@@ -13017,7 +13129,7 @@ var Sound = function (_EventEmitter) {
         }
 
         /**
-         * 음량.
+         * @description 음량 설정.
          * @param val {Number} 소리크기
          * @return {Object} Sound 객체
          */

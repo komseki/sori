@@ -19,7 +19,8 @@
     "copy-webpack-plugin": "^4.2.1",
     "gulp": "^3.9.1",
     "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
+    "webpack-dev-server": "^2.9.4",
+    "webpack-stream": "^4.0.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0"

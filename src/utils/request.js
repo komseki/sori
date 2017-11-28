@@ -2,7 +2,7 @@
  * obj.url
  * obj.responseType
  * obj.header
- *
+ * @description ajax 로드 함수. Promise 객체를 반환한다.
  * @param obj
  * @return {Promise}
  * @private

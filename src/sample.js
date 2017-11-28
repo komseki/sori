@@ -1,4 +1,4 @@
-import sori from './Sori.js';
+import Sori from './Sori.js';
 
 
 let dummy = {
@@ -37,3 +37,20 @@ let dummy = {
         removeBlock : {"when":0, "offset":4.177, "duration":1.776}
     }
 }
+
+
+const sori = new Sori();
+sori.load([
+    {url: '../assets/sound/eff_all.mp3', id: 'test'},
+    {url: '../assets/sound/eff_all.mp3'},
+    {url: '../assets/sound/eff_cm_btn_basic.mp3'}
+]);
+
+sori.on( Sori.LOAD_COMPLETE, snd=>{
+    console.log(snd._id);
+} );
+
+sori.on( Sori.LOAD_FINISH, ()=>{
+    let snd = sori.getSoundByUrl('../assets/sound/eff_all.mp3');
+    console.log(sori.getSoundById('aaa'), sori._soundList);
+} );

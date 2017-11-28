@@ -1,44 +1,61 @@
 const EventEmitter = require('events');
 
+/**
+ *  사운드 객체.
+ */
 class Sound extends EventEmitter{
 
+    //  사운드 재생 완료시 호출될 이벤트명.
     static ENDED = 'ended';
 
+    // 아이디
     _id;
+    // 음량을 위한  gainNode
     _gainNode;
+    // AudioContext
     _context;
+    // BufferArray
     _buffer;
+    // Audio  Source
     _source;
+    // 로드 및 재생정보
     _config;
+    // 반복 재생여부.
     _loop = false;
 
+    /**
+     * @description Sound 인스턴스 생성 및 반환.
+     * @param info {AudioContext}
+     * @return {Sound}
+     * @static
+     */
     static createInstance( info ){
         return new Sound().init(info);
     }
 
+    /**
+     * 생성자 함수.
+     */
     constructor(){
         super();
     }
 
-    // { buffer:buffer, context:this._context, config:config, id:id }
+    /**
+     * Sound 객체 초기화.
+     * @param buffer {ArrayBuffer}
+     * @param context {AudioContext}
+     * @param config {Object}
+     * @param id {String)
+     * @return {*}
+     */
     init( {buffer, context, config, id} ){
         if( buffer === undefined ) return;
 
         const ctx = this._context = context,
             destination = ctx.destination,
-            // source = ctx.createBufferSource(),
-            oscillator = ctx.createOscillator(),
             gainNode = ctx.createGain();
 
-        //oscillator.connect( gainNode );
         gainNode.connect( destination );
-
-        //
-        // source.buffer = buffer;
-        //
-        // source.connect( ctx.destination );
-        // source.connect( gainNode.gain );
-        // this._source = source;
 
         this._buffer = buffer;
         this._loop = false;
@@ -50,7 +67,7 @@ class Sound extends EventEmitter{
     }
 
     /**
-     *
+     * @description 사운드 재생시작.
      * @param when {Number} 재생전 pause 타임.
      * @param offset {Number} 시작위치
      * @param duration {Number} 재생할 시간
@@ -89,7 +106,7 @@ class Sound extends EventEmitter{
     }
 
     /**
-     * 정지
+     * @description 사운드 정지
      * @param when {Number} 정지 delay 시간.
      * @return {Object} Sound 객체
      */
@@ -106,7 +123,7 @@ class Sound extends EventEmitter{
     }
 
     /**
-     * 반복
+     * @description 반복여부 설정.
      * @param bool {boolean} true 반복
      * @return {Object} Sound 객체
      */
@@ -116,7 +133,7 @@ class Sound extends EventEmitter{
     }
 
     /**
-     * 음량.
+     * @description 음량 설정.
      * @param val {Number} 소리크기
      * @return {Object} Sound 객체
      */

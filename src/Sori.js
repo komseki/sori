@@ -3,37 +3,53 @@ import Sound from './Sound.js';
 
 const EventEmitter = require('events');
 
+/**
+ * Sori 클래스.
+ * 오디오 로드 및 재생을 관리한다.
+ */
 class Sori extends EventEmitter{
 
+    // 개별 로드 완료시 이벤트명
     static LOAD_COMPLETE = 'loadComplete';
+    // 전체 로드 완료시 이벤트명
     static LOAD_FINISH = 'loadFinish';
+    // 로드 에러시 이벤트명
     static LOAD_ERROR = 'loadError';
 
+    // AudioContext
     _context;
+    // UID 생성 카운트
     _uidCnt = 0;
+    // URL : [UID] 형태로 저장된 리스트
     _urlList = {};
+    // UID : Buffer 형태로 저장된 리스트
     _audioBufferList = {};
+    // UID : Sound 형태로 저장된 리스트
     _soundList = {};
+    // UID : Object(로드정보) 형태로 저장된 리스트.
     _loadInfos = {};
+    // ID : UID 형태로 저장된 리스트.
     _idList = {};
 
 
-
+    /**
+     * 생성자 함수
+     */
     constructor(){
         super();
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         this._context = new AudioContext();
     }
 
+    /**
+     * 로드 명령을 내린다
+     * @param list
+     */
     load( list ){
+        list = Array.isArray(list)? list : [list];
+
         const loadList = this._parseList(list);
-        console.log(loadList)
-
-        // 버퍼가 이미 있는지 확인한다. 버퍼가 있으면 있는 버퍼로 사용한다.
-        // 버퍼가 이미 없으나 동일한 주소의 호출이 있다면, 예약을 만들어 놓는다.
-
         let ldr = SoundLoader.createInstance(this._context)
-
 
         /**
          * 로드 에러.
@@ -43,7 +59,7 @@ class Sori extends EventEmitter{
         });
 
         /**
-         * 개별 로드 완료
+         * 개별 로드 완료. 사운드 객체를 만든다.
          */
         ldr.on(SoundLoader.COMPLETE, (obj, buffer)=>{
             buffer = buffer || this._audioBufferList[obj.url];
@@ -67,12 +83,16 @@ class Sori extends EventEmitter{
         ldr.load( loadList );
     }
 
+    /**
+     * Sound 객체의 인스턴스를 생성한다.
+     * @param obj - 로드된 오디오 로드/재생 정보.
+     * @param buffer - 로드된 오디오의 버퍼
+     */
     createSound(obj, buffer){
         let loadInfo,
             uids;
         uids = this._urlList[obj.url];
         uids.forEach(v=>{
-            // TODO ::  Sound 객체가 있는지 확인하고 생성한다.
             loadInfo = this._loadInfos[v];
             const info = {
                     buffer,
@@ -88,6 +108,11 @@ class Sori extends EventEmitter{
         });
     }
 
+    /**
+     * 오디오의 주소를 이용해 로드할 목록을 새로 만든다.
+     * @param list
+     * @private
+     */
     _parseList( list ){
         let state = false;
         return list.filter( v=>{
@@ -101,7 +126,6 @@ class Sori extends EventEmitter{
             }else{
                 state = false;
             }
-            console.log( v.id, state );
 
             v._isLoad = state;
 
@@ -114,7 +138,7 @@ class Sori extends EventEmitter{
     }
 
     /**
-     * @description
+     * @description 오디오 파일의 UID에 매칭되는 사운드 객체를 반환한다.
      * @param uid
      * @return {Sound}
      * @private
@@ -124,7 +148,7 @@ class Sori extends EventEmitter{
     }
 
     /**
-     * @description
+     * @description 오디오 파일의 ID에 매칭되는 사운드 객체를 반환한다.
      * @param id
      * @return {Sound}
      */
@@ -134,8 +158,7 @@ class Sori extends EventEmitter{
     }
 
     /**
-     *
-     * @description
+     * @description  오디오 파일의 URL에 매칭되는 사운드 객체를 반환한다.
      * @param url
      * @return {Array}
      */
@@ -147,7 +170,7 @@ class Sori extends EventEmitter{
     }
 
     /**
-     * @description
+     * @description 전체 사운드 객체의 목록을 가져온다.
      * @return {Array}
      */
     getSoundAll(){
@@ -155,28 +178,6 @@ class Sori extends EventEmitter{
     }
 }
 
-const sori = new Sori();
-sori.load([
-    {url: '../assets/sound/eff_all.mp3', id: 'test'},
-    {url: '../assets/sound/eff_all.mp3'},
-    {url: '../assets/sound/eff_cm_btn_basic.mp3'}
-]);
-
-sori.on( Sori.LOAD_COMPLETE, snd=>{
-    console.log(snd._id);
-} );
-
-sori.on( Sori.LOAD_FINISH, ()=>{
-    let snd = sori.getSoundByUrl('../assets/sound/eff_all.mp3');
-    console.log(sori.getSoundById('aaa'), sori._soundList);
-} );
-
-
 
 export default Sori;
-
-
-
-// ldr.load({url: '../assets/sound/eff_all.mp3', responseType: 'arraybuffer'});
-
 

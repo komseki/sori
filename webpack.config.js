@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const CONFIG = {
     context: path.resolve(__dirname, './src'),
     entry: {
-        sori: ['babel-polyfill', './sample.js']
+        sori: ['babel-polyfill', './Sori.js']
     },
     output: {
         path: path.resolve(__dirname, './dist'),
