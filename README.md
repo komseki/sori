@@ -15,7 +15,7 @@ const sori = new Sori();
 ##### load( loadInfo )
 음원을 로드해 사운드 객체로 만든다.
 * loadInfo {Object|Array} 로드 및 재생 정보. 여러개의 파일을 로드 할 경우 배열을 이용한다.<br />
-###### loadInfo
+##### loadInfo
 **url**<br />
 type: String<br />
 로드할 음원의 경로. 사운드 검색시에도 사용된다. 동일한 주소의 파일은 한번만 로드된다.<br />
@@ -26,7 +26,7 @@ type: String<br />
 type: Object<br />
 사운드 재생을 위한 설정 객체.<br />
 
-###### config
+##### config
 **when**<br />
 type: Number<br />
 재생지연시간. (단위 : 초)<br /><br />
