@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "304a8eff0956d947c8c4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0c7fea203e1f7ff10219"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11091,11 +11091,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /**
- * @type {Sori}
- */
-var sori = new __WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */]();
-
-/**
  * 효과음 스프라이트 사운드 시작커서위치 및 재생시간.
  * eff_all.mp3
  * 1. eff_cm_btn_basic : 0 - 0.156
@@ -11118,6 +11113,11 @@ var effSoundConfig = {
     sprite7: { "when": 0, "offset": 2.401, "duration": 1.776 },
     sprite8: { "when": 0, "offset": 4.177, "duration": 1.776 }
 };
+
+/**
+ * @type {Sori}
+ */
+var sori = new __WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */]();
 
 /**
  * 사운드 로드

@@ -1,11 +1,6 @@
 import Sori from './Sori.js';
 
 /**
- * @type {Sori}
- */
-const sori = new Sori();
-
-/**
  * 효과음 스프라이트 사운드 시작커서위치 및 재생시간.
  * eff_all.mp3
  * 1. eff_cm_btn_basic : 0 - 0.156
@@ -28,6 +23,11 @@ const effSoundConfig = {
     sprite7 : {"when":0, "offset":2.401, "duration":1.776},
     sprite8 : {"when":0, "offset":4.177, "duration":1.776}
 };
+
+/**
+ * @type {Sori}
+ */
+const sori = new Sori();
 
 /**
  * 사운드 로드
