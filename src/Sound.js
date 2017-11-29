@@ -58,10 +58,10 @@ class Sound extends EventEmitter{
         gainNode.connect( destination );
 
         this._buffer = buffer;
-        this._loop = false;
+        this._config = config || {};
+        this._loop = config.loop || false;
         this._id = id || `sound_${Date.now()}`;
         this._gainNode = gainNode;
-        this._config = config || {};
 
         return this;
     }

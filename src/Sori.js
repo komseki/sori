@@ -15,6 +15,8 @@ class Sori extends EventEmitter{
     static LOAD_FINISH = 'loadFinish';
     // 로드 에러시 이벤트명
     static LOAD_ERROR = 'loadError';
+    // 재생완료 이벤트명
+    static PLAY_ENDED = Sound.ENDED;
 
     // AudioContext
     _context;
@@ -63,7 +65,6 @@ class Sori extends EventEmitter{
          */
         ldr.on(SoundLoader.COMPLETE, (obj, buffer)=>{
             buffer = buffer || this._audioBufferList[obj.url];
-            console.log( obj, buffer );
             if( !!buffer ) {
                 this._audioBufferList[obj.url] = buffer;
                 this.createSound(obj, buffer);
@@ -93,18 +94,20 @@ class Sori extends EventEmitter{
             uids;
         uids = this._urlList[obj.url];
         uids.forEach(v=>{
-            loadInfo = this._loadInfos[v];
-            const info = {
-                    buffer,
-                    context: this._context,
-                    config: loadInfo.config || {},
-                    id: loadInfo.id,
-                    uid: v
-                },
-                snd = Sound.createInstance(info);
-            //
-            this._soundList[v] = snd;
-            this.emit( Sori.LOAD_COMPLETE, snd );
+            if( this._soundList[v] === undefined ){
+                loadInfo = this._loadInfos[v];
+                const info = {
+                        buffer,
+                        context: this._context,
+                        config: loadInfo.config || {},
+                        id: loadInfo.id,
+                        uid: v
+                    },
+                    snd = Sound.createInstance(info);
+                //
+                this._soundList[v] = snd;
+                this.emit( Sori.LOAD_COMPLETE, snd );
+            }
         });
     }
 

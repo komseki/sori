@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f524472574fa12a9075a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3fb083a62402d92e68b3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11090,49 +11090,114 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Sori_js__ = __webpack_require__(389);
 
 
-var dummy = {
-    /**
-     * 사용할 사운드파일 정보
-     */
-    sound: {
-        basicOnly: "assets/sound/eff_cm_btn_basic.mp3",
-        soundList: [{ "id": "contents", "url": 'assets/sound/bgm_cm_contents.mp3' }, { "id": "intro", "url": 'assets/sound/bgm_cm_intro.mp3' }, { "id": "eff_all", "url": 'assets/sound/eff_all.mp3' }, { "id": "nar", "url": 'assets/sound/nar_cm_moby_direct.mp3' }]
-    },
-    /* 사운드 시작커서위치 및 재생시간.
-    1-8번까지 파일 합쳐 eff_all.mp3 만듦.
-    eff_all.mp3
-    1. eff_cm_btn_basic : 0 - 0.156
-    2. eff_cm_btn_choice : 0.156 - 0.365
-    3. eff_cm_btn_remove : 0.365 - 0.844
-    4. eff_cm_btn_rolling : 0.844 - 1.463
-    5. eff_cm_btn_shooting : 1.463 - 2.113
-    6. eff_cm_btn_touch.mp3 : 2.113 - 2.401
-    7. eff_block_attached : 2.401 - 4.177
-    8. eff_block_remove : 4.177 - 5.953
-    */
-    effSoundConfig: {
-        basic: { "when": 0, "offset": 0, "duration": 0.156 },
-        choice: { "when": 0, "offset": 0.156, "duration": 0.209 },
-        remove: { "when": 0, "offset": 0.365, "duration": 0.479 },
-        rolling: { "when": 0, "offset": 0.844, "duration": 0.619 },
-        shooting: { "when": 0, "offset": 1.463, "duration": 0.65 },
-        touch: { "when": 0, "offset": 2.113, "duration": 0.288 },
-        attachedBlock: { "when": 0, "offset": 2.401, "duration": 1.776 },
-        removeBlock: { "when": 0, "offset": 4.177, "duration": 1.776 }
-    }
+/**
+ * @type {Sori}
+ */
+var sori = new __WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */]();
+
+/**
+ * 효과음 스프라이트 사운드 시작커서위치 및 재생시간.
+ * eff_all.mp3
+ * 1. eff_cm_btn_basic : 0 - 0.156
+ * 2. eff_cm_btn_choice : 0.156 - 0.365
+ * 3. eff_cm_btn_remove : 0.365 - 0.844
+ * 4. eff_cm_btn_rolling : 0.844 - 1.463
+ * 5. eff_cm_btn_shooting : 1.463 - 2.113
+ * 6. eff_cm_btn_touch.mp3 : 2.113 - 2.401
+ * 7. eff_block_attached : 2.401 - 4.177
+ * 8. eff_block_remove : 4.177 - 5.953
+ * @type {{sprite1: {when: number, offset: number, duration: number}, sprite2: {when: number, offset: number, duration: number}, sprite3: {when: number, offset: number, duration: number}, sprite4: {when: number, offset: number, duration: number}, sprite5: {when: number, offset: number, duration: number}, sprite6: {when: number, offset: number, duration: number}, sprite7: {when: number, offset: number, duration: number}, sprite8: {when: number, offset: number, duration: number}}}
+ */
+var effSoundConfig = {
+    sprite1: { "when": 0, "offset": 0, "duration": 0.156 },
+    sprite2: { "when": 0, "offset": 0.156, "duration": 0.209 },
+    sprite3: { "when": 0, "offset": 0.365, "duration": 0.479 },
+    sprite4: { "when": 0, "offset": 0.844, "duration": 0.619 },
+    sprite5: { "when": 0, "offset": 1.463, "duration": 0.65 },
+    sprite6: { "when": 0, "offset": 2.113, "duration": 0.288 },
+    sprite7: { "when": 0, "offset": 2.401, "duration": 1.776 },
+    sprite8: { "when": 0, "offset": 4.177, "duration": 1.776 }
 };
 
-var sori = new __WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */]();
-sori.load([{ url: '../assets/sound/eff_all.mp3', id: 'test' }, { url: '../assets/sound/eff_all.mp3' }, { url: '../assets/sound/eff_cm_btn_basic.mp3' }]);
+/**
+ * 사운드 로드
+ */
+function init() {
+    // 로드 목록.
+    var arr = [{ url: '../assets/sound/bgm_cm_contents.mp3', id: 'bgm1', config: { loop: true } }, { url: '../assets/sound/bgm_cm_intro.mp3', id: 'bgm2' }];
+    // 로드 목록 추가.
+    for (var id in effSoundConfig) {
+        arr.push({
+            url: '../assets/sound/eff_all.mp3',
+            config: effSoundConfig[id],
+            id: id
+        });
+    }
 
-sori.on(__WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */].LOAD_COMPLETE, function (snd) {
-    console.log(snd._id);
-});
+    // 개별 로드 완료
+    sori.on(__WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */].LOAD_COMPLETE, function (snd) {
+        //console.log(snd._id);
+    });
 
-sori.on(__WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */].LOAD_FINISH, function () {
-    var snd = sori.getSoundByUrl('../assets/sound/eff_all.mp3');
-    console.log(sori.getSoundById('aaa'), sori._soundList);
-});
+    // 전체 로드 완료.
+    sori.on(__WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */].LOAD_FINISH, onSoundLoaded);
+
+    // 로드 시작.
+    sori.load(arr);
+}
+
+/**
+ * 전체 로드 완료 이벤트 리스너
+ */
+function onSoundLoaded() {
+    setEvent();
+}
+
+/**
+ * 버튼 이벤트 부여 및 재생.
+ */
+function setEvent() {
+    var bgms = document.querySelectorAll('.toggle'),
+        effs = document.querySelectorAll('.eff');
+
+    // bgm 버튼 이벤트 및 재생 설정.
+    bgms.forEach(function (el) {
+        el.addEventListener('click', function (e) {
+            var btn = e.target,
+                id = btn.id,
+                state = void 0;
+            btn.dataset.state = state = btn.dataset.state === 'on' ? 'off' : 'on';
+            btn.innerHTML = state;
+            if (state === 'off') {
+                if (id === 'bgm2') {
+                    sori.getSoundById(id).on(__WEBPACK_IMPORTED_MODULE_0__Sori_js__["a" /* default */].PLAY_ENDED, function () {
+                        btn.dataset.state = btn.innerHTML = 'on';
+                    });
+                }
+                sori.getSoundById(id).start();
+            } else {
+                sori.getSoundById(id).stop();
+            }
+        });
+    });
+
+    // 효과음 스프라이트 사운드 버튼 이벤트 및 재생.
+    effs.forEach(function (el) {
+        el.addEventListener('click', function () {
+            sori.getSoundById(el.dataset.snd).start();
+        });
+    });
+}
+
+/**
+ * DOMContentLoaded 이벤트 리스너.
+ */
+function domReady() {
+    document.removeEventListener('DOMContentLoaded', domReady);
+    init();
+}
+
+document.addEventListener('DOMContentLoaded', domReady);
 
 /***/ }),
 /* 389 */
@@ -11179,10 +11244,9 @@ var Sori = function (_EventEmitter) {
 
     // UID 생성 카운트
 
-    // 로드 에러시 이벤트명
+    // 재생완료 이벤트명
 
-
-    // 개별 로드 완료시 이벤트명
+    // 전체 로드 완료시 이벤트명
     function Sori() {
         __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, Sori);
 
@@ -11214,7 +11278,10 @@ var Sori = function (_EventEmitter) {
 
     // AudioContext
 
-    // 전체 로드 완료시 이벤트명
+    // 로드 에러시 이벤트명
+
+
+    // 개별 로드 완료시 이벤트명
 
 
     __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(Sori, [{
@@ -11239,7 +11306,6 @@ var Sori = function (_EventEmitter) {
              */
             ldr.on(__WEBPACK_IMPORTED_MODULE_5__SoundLoader_js__["a" /* default */].COMPLETE, function (obj, buffer) {
                 buffer = buffer || _this2._audioBufferList[obj.url];
-                console.log(obj, buffer);
                 if (!!buffer) {
                     _this2._audioBufferList[obj.url] = buffer;
                     _this2.createSound(obj, buffer);
@@ -11274,18 +11340,20 @@ var Sori = function (_EventEmitter) {
                 uids = void 0;
             uids = this._urlList[obj.url];
             uids.forEach(function (v) {
-                loadInfo = _this3._loadInfos[v];
-                var info = {
-                    buffer: buffer,
-                    context: _this3._context,
-                    config: loadInfo.config || {},
-                    id: loadInfo.id,
-                    uid: v
-                },
-                    snd = __WEBPACK_IMPORTED_MODULE_6__Sound_js__["a" /* default */].createInstance(info);
-                //
-                _this3._soundList[v] = snd;
-                _this3.emit(Sori.LOAD_COMPLETE, snd);
+                if (_this3._soundList[v] === undefined) {
+                    loadInfo = _this3._loadInfos[v];
+                    var info = {
+                        buffer: buffer,
+                        context: _this3._context,
+                        config: loadInfo.config || {},
+                        id: loadInfo.id,
+                        uid: v
+                    },
+                        snd = __WEBPACK_IMPORTED_MODULE_6__Sound_js__["a" /* default */].createInstance(info);
+                    //
+                    _this3._soundList[v] = snd;
+                    _this3.emit(Sori.LOAD_COMPLETE, snd);
+                }
             });
         }
 
@@ -11384,6 +11452,7 @@ var Sori = function (_EventEmitter) {
 Sori.LOAD_COMPLETE = 'loadComplete';
 Sori.LOAD_FINISH = 'loadFinish';
 Sori.LOAD_ERROR = 'loadError';
+Sori.PLAY_ENDED = __WEBPACK_IMPORTED_MODULE_6__Sound_js__["a" /* default */].ENDED;
 
 
 /* harmony default export */ __webpack_exports__["a"] = (Sori);
@@ -13045,10 +13114,10 @@ var Sound = function (_EventEmitter) {
             gainNode.connect(destination);
 
             this._buffer = buffer;
-            this._loop = false;
+            this._config = config || {};
+            this._loop = config.loop || false;
             this._id = id || 'sound_' + Date.now();
             this._gainNode = gainNode;
-            this._config = config || {};
 
             return this;
         }
