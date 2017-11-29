@@ -35,8 +35,8 @@ const effSoundConfig = {
 function init(){
     // 로드 목록.
     const arr = [
-        {url: '../assets/sound/bgm_cm_contents.mp3', id: 'bgm1', config:{loop:true}},
-        {url: '../assets/sound/bgm_cm_intro.mp3', id: 'bgm2'}
+        {url: '../assets/sound/Pink-panther-theme-music-box.mp3', id: 'bgm1', config:{loop:true}},
+        {url: '../assets/sound/Snowing-holiday music.mp3', id: 'bgm2'}
     ];
     // 로드 목록 추가.
     for( let id in effSoundConfig ){

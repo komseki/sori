@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b066187cf5b2598fba74"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "304a8eff0956d947c8c4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11124,7 +11124,7 @@ var effSoundConfig = {
  */
 function init() {
     // 로드 목록.
-    var arr = [{ url: '../assets/sound/bgm_cm_contents.mp3', id: 'bgm1', config: { loop: true } }, { url: '../assets/sound/bgm_cm_intro.mp3', id: 'bgm2' }];
+    var arr = [{ url: '../assets/sound/Pink-panther-theme-music-box.mp3', id: 'bgm1', config: { loop: true } }, { url: '../assets/sound/Snowing-holiday music.mp3', id: 'bgm2' }];
     // 로드 목록 추가.
     for (var id in effSoundConfig) {
         arr.push({
