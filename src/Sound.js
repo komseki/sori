@@ -14,7 +14,7 @@ class Sound extends EventEmitter{
     _gainNode;
     // AudioContext
     _context;
-    // BufferArray
+    // ArrayBuffer
     _buffer;
     // Audio  Source
     _source;

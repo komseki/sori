@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3fb083a62402d92e68b3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b066187cf5b2598fba74"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -13053,7 +13053,7 @@ var Sound = function (_EventEmitter) {
 
         // 로드 및 재생정보
 
-        // BufferArray
+        // ArrayBuffer
 
         // 음량을 위한  gainNode
 
