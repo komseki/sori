@@ -181,6 +181,6 @@ class Sori extends EventEmitter{
     }
 }
 
-
+window['Sori'] = Sori;
 export default Sori;
 

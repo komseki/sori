@@ -31,7 +31,12 @@ const CONFIG = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            foo : 123
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
     ],
     devServer: {
         contentBase: './',
@@ -42,7 +47,9 @@ const CONFIG = {
         openPage: './sample/index.html',
         port: 8091
     },
-    watch: true
+    watch: false
 }
+process.env.NODE_ENV = JSON.parse('"development"');
+
 
 module.exports = CONFIG;
